@@ -53,13 +53,13 @@
         export let cartQuantity = JSON.parse(localStorage.getItem('cartHome')) || 0;
         saveCartQuantity();
 
-        export function getCartQuantity()
+        export function updateCartQuantity()
         {
-                let cartCount = 0;
+                cartQuantity = 0;
                 cart.forEach((cartItem) => {
-                        cartCount += cartItem.count;
+                        cartQuantity += cartItem.count;
                 });
-                return cartCount;
+                saveCartQuantity();
         }
         
         export function cartQuantityIncrement()

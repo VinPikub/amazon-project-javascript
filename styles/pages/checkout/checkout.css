@@ -217,6 +217,7 @@
 
 .quantity-save {
   display: none;
+  cursor: pointer;
 }
 
 .edit-update-link .quantity-label{

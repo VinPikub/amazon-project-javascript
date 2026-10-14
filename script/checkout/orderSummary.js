@@ -1,4 +1,4 @@
-        import {cart, getCartItem, saveToLocal, cartQuantity, saveCartQuantity} from '../../data/cart.js';
+        import {cart, getCartItem, saveToLocal, updateCartQuantity} from '../../data/cart.js';
         import { getProduct } from '../../data/products.js';
         import {formatCurrency} from '../utils/money.js';
         
@@ -105,22 +105,30 @@
                 });
             });
 
+            function saveItem(id)
+            {
+                let value = Number(document.querySelector(`.js-input-${id}`).value);
+                let matchingObject = getCartItem(id);
+                //let selectProductQuantity = document.querySelector(`.product-quantity-${productId}`);
+                
+                matchingObject.count = value;
+                saveToLocal();
+                updateCartQuantity();
+                //selectProductQuantity.classList.remove('edit-update-link');
+                renderOrderSummary();
+            }
             let selectSave = document.querySelectorAll('.js-save');
             selectSave.forEach((save) => {
                 let productId = save.dataset.productId; //here kebabcase became camelCase
-                let selectProductQuantity = document.querySelector(`.product-quantity-${productId}`);
                 
                 save.addEventListener('click', () => {
-                    let value = document.querySelector(`.js-input-${productId}`).value;
-                    let matchingObject = getCartItem(productId);
-    
-                    matchingObject.count = Number(value);
-                    saveToLocal();
-                    //cartQuantity += matchingObject.count;
-                    //saveCartQuantity();
-                    //selectProductQuantity.classList.remove('edit-update-link');
-                    renderOrderSummary();
-                })
-            })
+                    saveItem(productId);
+                });
+                
+                document.querySelector(`.js-input-${productId}`).addEventListener('keydown', (event) => {
+                    if(event.key === 'Enter')
+                        saveItem(productId);
+                });
+            });
         }
         

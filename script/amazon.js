@@ -1,4 +1,4 @@
-        import {cart, addToCart, cartQuantity, saveCartQuantity, getCartQuantity, cartQuantityIncrement} from '../data/cart.js';
+        import {cart, addToCart, cartQuantity, cartQuantityIncrement} from '../data/cart.js';
         import {products} from '../data/products.js';
         import { formatCurrency } from './utils/money.js';
 

@@ -1,57 +1,8 @@
-        import {cart, addToCart} from '../data/cart.js';
+        import {cart, addToCart, cartQuantity, saveCartQuantity, getCartQuantity, cartQuantityIncrement} from '../data/cart.js';
         import {products} from '../data/products.js';
         import { formatCurrency } from './utils/money.js';
 
-        function saveCartQuantity()
-        {
-            localStorage.setItem('cartHome', JSON.stringify(cartQuantity));
-        }
-
-        let cartQuantity = JSON.parse(localStorage.getItem('cartHome')) || 0;
-        saveCartQuantity();
         
-        function generateCartQuantity()
-        {
-            let cartHtml;
-            cartHtml = `<div class="cart-quantity">${cartQuantity}</div>`;
-            return cartHtml;
-        }
-
-        function generateAmazonHeader()
-        {
-            const amazonHeader = `<div class="amazon-header-left-section">
-                            <a href="amazon.html" class="header-link">
-                            <img class="amazon-logo"
-                                src="images/amazon-logo-white.png">
-                            <img class="amazon-mobile-logo"
-                                src="images/amazon-mobile-logo-white.png">
-                            </a>
-                        </div>
-
-                        <div class="amazon-header-middle-section">
-                            <input class="search-bar" type="text" placeholder="Search">
-
-                            <button class="search-button">
-                            <img class="search-icon" src="images/icons/search-icon.png">
-                            </button>
-                        </div>
-
-                        <div class="amazon-header-right-section">
-                            <a class="orders-link header-link" href="orders.html">
-                            <span class="returns-text">Returns</span>
-                            <span class="orders-text">& Orders</span>
-                            </a>
-
-                            <a class="cart-link header-link" href="checkout.html">
-                            <img class="cart-icon" src="images/icons/cart-icon.png">
-                            ${generateCartQuantity()}
-                            <div class="cart-text">Cart</div>
-                            </a>
-                        </div>`;
-            document.querySelector('.amazon-header').innerHTML = amazonHeader;
-        }
-        generateAmazonHeader();
-
         let str = '';
         let selectgrid = document.querySelector('.products-grid');
         products.forEach((item) => {
@@ -105,6 +56,7 @@
                     </div>`;
         });
         selectgrid.innerHTML = str;
+        
         function displayAdded(id)
         {
             let selectAddedToCart = document.querySelector(`.added-to-cart-${id}`);
@@ -117,7 +69,8 @@
         }
 
         let selectaddButt = document.querySelectorAll('.add-to-cart-button');
-        //let selectCartQuantity = document.querySelector('.cart-quantity');
+        let selectCartQuantity = document.querySelector('.cart-quantity');
+        selectCartQuantity.innerHTML = cartQuantity || '';
 
         selectaddButt.forEach((button) => {
             button.addEventListener('click', () => {
@@ -125,11 +78,9 @@
                 //let {productId} = button.dataset; //using shortcart
                 let fixSelect = document.querySelector(`.select-${id}`);
                 let count = Number(fixSelect.value);
-                cartQuantity += count;
-                saveCartQuantity();
+                cartQuantityIncrement();
                 addToCart(id, count);
-                //selectCartQuantity.innerHTML = cartQuantity;
+                selectCartQuantity.innerHTML = cartQuantity;
                 displayAdded(id);
-                generateAmazonHeader();
             });
         });

@@ -44,3 +44,26 @@
                 }
                 saveToLocal();
         }
+
+        export function saveCartQuantity()
+        {
+                localStorage.setItem('cartHome', JSON.stringify(cartQuantity));
+        }
+        
+        export let cartQuantity = JSON.parse(localStorage.getItem('cartHome')) || 0;
+        saveCartQuantity();
+
+        export function getCartQuantity()
+        {
+                let cartCount = 0;
+                cart.forEach((cartItem) => {
+                        cartCount += cartItem.count;
+                });
+                return cartCount;
+        }
+        
+        export function cartQuantityIncrement()
+        {
+                cartQuantity++;
+                saveCartQuantity();
+        }

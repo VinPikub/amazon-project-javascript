@@ -1,4 +1,4 @@
-        import {cart} from '../../data/cart.js';
+        import {cart, getCartItem, saveToLocal, cartQuantity, saveCartQuantity} from '../../data/cart.js';
         import { getProduct } from '../../data/products.js';
         import {formatCurrency} from '../utils/money.js';
         
@@ -70,19 +70,17 @@
                                                 ${product.name}
                                             </div>
                                             <div class="product-price">
-                                                ${formatCurrency(product.priceCents)}
+                                                $${formatCurrency(product.priceCents)}
                                             </div>
-                                            <div class="product-quantity">
+                                            <div class="product-quantity product-quantity-${cartItem.id}">
                                                 <span>
                                                     Quantity: <span class="quantity-label">${cartItem.count}</span>
-                                                </span>
-                                                <span class="input-button-hide">
-                                                    <input type="text" class="edit-quantity-input">
-                                                    <button class="">Save</button>
                                                 </span>
                                                 <span class="update-quantity-link link-primary js-update" data-product-id="${cartItem.id}">
                                                     Update
                                                 </span>
+                                                <input type="number" min="0" max="100" value="${cartItem.count}" class="quantity-input js-input-${cartItem.id}">
+                                                <span class="quantity-save js-save js-save-${cartItem.id}" data-product-id="${cartItem.id}">Save</span>
                                                 <span class="delete-quantity-link link-primary">
                                                     Delete
                                                 </span>
@@ -99,9 +97,30 @@
             let selectUpdate = document.querySelectorAll('.js-update');
 
             selectUpdate.forEach((update) => {
+                let productId = update.dataset.productId; //here kebabcase became camelCase
+                let selectProductQuantity = document.querySelector(`.product-quantity-${productId}`);
+                
                 update.addEventListener('click', () => {
-                    let productId = update.dataset.productId; //here kebabcase became camelCase
-                    
+                    selectProductQuantity.classList.add('edit-update-link');
+                });
+            });
+
+            let selectSave = document.querySelectorAll('.js-save');
+            selectSave.forEach((save) => {
+                let productId = save.dataset.productId; //here kebabcase became camelCase
+                let selectProductQuantity = document.querySelector(`.product-quantity-${productId}`);
+                
+                save.addEventListener('click', () => {
+                    let value = document.querySelector(`.js-input-${productId}`).value;
+                    let matchingObject = getCartItem(productId);
+    
+                    matchingObject.count = Number(value);
+                    saveToLocal();
+                    //cartQuantity += matchingObject.count;
+                    //saveCartQuantity();
+                    //selectProductQuantity.classList.remove('edit-update-link');
+                    renderOrderSummary();
                 })
             })
         }
+        

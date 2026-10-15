@@ -67,3 +67,15 @@
                 cartQuantity++;
                 saveCartQuantity();
         }
+
+        export function removeCartItem(obj)
+        {
+                let newCart = [];
+                cart.forEach((cartItem) => {
+                        if(cartItem !== obj)
+                                newCart.push(cartItem);
+                });
+                cart = newCart;
+                console.log(cart);
+                saveToLocal();
+        }

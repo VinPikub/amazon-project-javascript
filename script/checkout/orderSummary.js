@@ -1,4 +1,4 @@
-        import {cart, getCartItem, saveToLocal, updateCartQuantity} from '../../data/cart.js';
+        import {cart, getCartItem, saveToLocal, updateCartQuantity, removeCartItem} from '../../data/cart.js';
         import { getProduct } from '../../data/products.js';
         import {formatCurrency} from '../utils/money.js';
         
@@ -81,7 +81,7 @@
                                                 </span>
                                                 <input type="number" min="0" max="100" value="${cartItem.count}" class="quantity-input js-input-${cartItem.id}">
                                                 <span class="quantity-save js-save js-save-${cartItem.id}" data-product-id="${cartItem.id}">Save</span>
-                                                <span class="delete-quantity-link link-primary">
+                                                <span class="delete-quantity-link link-primary js-delete" data-product-id="${cartItem.id}">
                                                     Delete
                                                 </span>
                                             </div>
@@ -108,15 +108,26 @@
             function saveItem(id)
             {
                 let value = Number(document.querySelector(`.js-input-${id}`).value);
-                let matchingObject = getCartItem(id);
-                //let selectProductQuantity = document.querySelector(`.product-quantity-${productId}`);
                 
-                matchingObject.count = value;
-                saveToLocal();
-                updateCartQuantity();
-                //selectProductQuantity.classList.remove('edit-update-link');
-                renderOrderSummary();
+                if(value < 0 || value > 1000)
+                {
+                    alert(`Invalid input`);
+                    renderOrderSummary();
+                }
+                else if(value === 0)
+                {
+                    deleteItem(id);
+                }
+                else
+                {
+                    let matchingObject = getCartItem(id);
+                    matchingObject.count = value;
+                    saveToLocal();
+                    updateCartQuantity();
+                    renderOrderSummary();
+                }
             }
+
             let selectSave = document.querySelectorAll('.js-save');
             selectSave.forEach((save) => {
                 let productId = save.dataset.productId; //here kebabcase became camelCase
@@ -128,6 +139,21 @@
                 document.querySelector(`.js-input-${productId}`).addEventListener('keydown', (event) => {
                     if(event.key === 'Enter')
                         saveItem(productId);
+                });
+            });
+
+            function deleteItem(id)
+            {
+                let matchingObject = getCartItem(id);
+                removeCartItem(matchingObject);
+                renderOrderSummary();
+            }
+            let selectDelete = document.querySelectorAll('.js-delete');
+
+            selectDelete.forEach((delet) => {
+                let productId = delet.dataset.productId; //here kebab case became camelCase
+                delet.addEventListener('click', () => {
+                    deleteItem(productId);
                 });
             });
         }

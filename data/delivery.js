@@ -17,22 +17,24 @@
                 priceCents: 999
             },
         ];
-        /*
-        const today = dayjs();
-                        let deliveryOption;
-                        
-                        deliveryOptions.forEach((delivery) => {
-                            if(cartItem.deliveryId === delivery.id)
-                                deliveryOption = delivery;
-                        });
-                        let deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
-                        let dateString = deliveryDate.format('dddd, MMMM d');
-        */
 
         export function getDateString(obj)
         {
-            let today = dayjs();
-            let deliveryDate = today.add(obj.deliveryDays, 'days');
+            let deliveryDate = dayjs();
+            /*
+            if(deliveryDate.format('dddd') === 'Saturday')
+                deliveryDate = deliveryDate.add(2, 'days');
+            else if(deliveryDate.format('dddd') === 'Sunday')
+                deliveryDate = deliveryDate.add(1, 'days');
+            */
+            let deliveryDays = obj.deliveryDays;
+            console.log(deliveryDays);
+            while(deliveryDays)
+            {
+                deliveryDate = deliveryDate.add(1, 'days');
+                if(deliveryDate.format('dddd') !== 'Saturday' && deliveryDate.format('dddd') !== 'Sunday')
+                    deliveryDays -= 1;
+            }
             let dateString = deliveryDate.format('dddd, MMMM D');
             return dateString;
         }

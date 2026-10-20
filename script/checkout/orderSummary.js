@@ -1,4 +1,4 @@
-        import {cart, getCartItem, saveToLocal, updateCartQuantity, removeCartItem} from '../../data/cart.js';
+        import {cart, getCartItem, saveToLocal, updateCartQuantity, removeCartItem, updateDeliveryOption} from '../../data/cart.js';
         import { getProduct } from '../../data/products.js';
         import {formatCurrency} from '../utils/money.js';
         import { deliveryOptions, getDateString, getDeliveryOption } from '../../data/delivery.js';
@@ -26,7 +26,7 @@
                     const dateString = getDateString(delivery);
                     let priceString = (delivery.priceCents) ? `$${formatCurrency(delivery.priceCents)}-` : 'FREE';
                     let check = (delivery.id === cartItem.deliveryId) ? 'checked' : '';
-                    deliveryHtml += `<div class="delivery-option">
+                    deliveryHtml += `<div class="delivery-option delivery-option-js" data-product-id="${cartItem.id}" data-delivery-id="${delivery.id}">
                                         <input type="radio"  ${check}
                                                 class="delivery-option-input"
                                                 name="delivery-option-${cartItem.id}">
@@ -155,6 +155,17 @@
                 let productId = delet.dataset.productId; //here kebab case became camelCase
                 delet.addEventListener('click', () => {
                     deleteItem(productId);
+                });
+            });
+
+            let selectDeliveryOptions = document.querySelectorAll('.delivery-option-js');
+            selectDeliveryOptions.forEach((deliveryOption) => {
+                let productId = deliveryOption.dataset.productId; //here kebab case became camleCase
+                let deliveryId = deliveryOption.dataset.deliveryId; //here kebab case became camelCase
+
+                deliveryOption.addEventListener('click', () => {
+                    updateDeliveryOption(productId, deliveryId);
+                    renderOrderSummary();
                 });
             });
         }

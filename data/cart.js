@@ -33,7 +33,7 @@
         export function addToCart(id, count)
         {
                 let matchingItem = getCartItem(id);
-                //let deliveryId = 
+                let deliveryId = "1";
                 if(matchingItem)
                 {
                     matchingItem.count += count;
@@ -42,9 +42,16 @@
                 {
                     cart.push({
                         id,
-                        count
+                        count,
+                        deliveryId
                     });
                 }
+                /*
+                 cart.push({
+                        id: id,
+                        count: count,
+                        deliveryId: deliveryId
+                })*/
                 saveToLocal();
         }
 
@@ -79,6 +86,16 @@
                                 newCart.push(cartItem);
                 });
                 cart = newCart;
-                console.log(cart);
                 saveToLocal();
+        }
+
+        export function updateDeliveryOption(productId, deliveryId)
+        {
+                cart.forEach((cartItem) => {
+                        if(productId === cartItem.id)
+                        {
+                                cartItem.deliveryId = deliveryId;
+                                saveToLocal();
+                        }
+                });
         }

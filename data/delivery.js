@@ -21,14 +21,7 @@
         export function getDateString(obj)
         {
             let deliveryDate = dayjs();
-            /*
-            if(deliveryDate.format('dddd') === 'Saturday')
-                deliveryDate = deliveryDate.add(2, 'days');
-            else if(deliveryDate.format('dddd') === 'Sunday')
-                deliveryDate = deliveryDate.add(1, 'days');
-            */
             let deliveryDays = obj.deliveryDays;
-            console.log(deliveryDays);
             while(deliveryDays)
             {
                 deliveryDate = deliveryDate.add(1, 'days');

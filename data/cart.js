@@ -1,3 +1,6 @@
+        import { products } from "./products.js";
+        import { deliveryOptions } from "./delivery.js";
+
         export let cart = JSON.parse(localStorage.getItem('cart')) || [
                 {
                         id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -62,13 +65,20 @@
         
         export let cartQuantity = JSON.parse(localStorage.getItem('cartHome')) || 0;
         saveCartQuantity();
+        
+        export function getCartQuantity()
+        {
+                let cartCount = 0;
+                
+                cart.forEach((cartItem) => {
+                    cartCount += cartItem.count;
+                });
+                return cartCount;
+        }
 
         export function updateCartQuantity()
         {
-                cartQuantity = 0;
-                cart.forEach((cartItem) => {
-                        cartQuantity += cartItem.count;
-                });
+                cartQuantity = getCartQuantity();
                 saveCartQuantity();
         }
         
@@ -98,4 +108,46 @@
                                 saveToLocal();
                         }
                 });
+        }
+
+        export function itemPrice()
+        {
+                let total = 0;
+                cart.forEach((cartItem) => {
+                        let productPrice;
+                        products.forEach((product) => {
+                                if(cartItem.id === product.id)
+                                        productPrice = product.priceCents;
+                        });
+                        total += productPrice*cartItem.count;
+                });
+                return total;
+        }
+
+        export function itemShipping()
+        {
+                let total = 0;
+
+                cart.forEach((cartItem) => {
+                        let shipping;
+                        deliveryOptions.forEach((delivery) => {
+                                if(cartItem.deliveryId === delivery.id)
+                                        shipping = delivery.priceCents;
+                        });
+                        total += shipping;
+                });
+                return total;
+        }
+
+        export function itemTotalBeforeTax()
+        {
+                let total = itemPrice() + itemShipping();
+                return total;
+        }
+
+        export function itemTax()
+        {
+                let total = itemTotalBeforeTax();
+                let tax = total * 10/100;
+                return tax;
         }

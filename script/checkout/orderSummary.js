@@ -1,19 +1,15 @@
-        import {cart, getCartItem, saveToLocal, updateCartQuantity, removeCartItem, updateDeliveryOption} from '../../data/cart.js';
+        import {cart, getCartItem, saveToLocal, updateCartQuantity, removeCartItem, updateDeliveryOption, getCartQuantity} from '../../data/cart.js';
         import { getProduct } from '../../data/products.js';
         import {formatCurrency} from '../utils/money.js';
         import { deliveryOptions, getDateString, getDeliveryOption } from '../../data/delivery.js';
+        import { renderPaymentSummary } from './paymentSummary.js';
         
         export function renderOrderSummary()
         {   
             let selectCheckout = document.querySelector('.checkout-js');
             function renderCheckout()
             {
-                let cartCount = 0;
-                
-                cart.forEach((cartItem) => {
-                    cartCount += cartItem.count;
-                });
-
+                const cartCount = getCartQuantity();
                 let checkout = `Checkout (<a class="return-to-home-link"
                                 href="amazon.html">${cartCount} items</a>)`;
                 selectCheckout.innerHTML = checkout;
@@ -115,9 +111,7 @@
                     renderOrderSummary();
                 }
                 else if(value === 0)
-                {
                     deleteItem(id);
-                }
                 else
                 {
                     let matchingObject = getCartItem(id);
@@ -125,6 +119,7 @@
                     saveToLocal();
                     updateCartQuantity();
                     renderOrderSummary();
+                    renderPaymentSummary();
                 }
             }
 
@@ -148,6 +143,7 @@
                 removeCartItem(matchingObject);
                 updateCartQuantity();
                 renderOrderSummary();
+                renderPaymentSummary();
             }
             let selectDelete = document.querySelectorAll('.js-delete');
 
@@ -166,6 +162,7 @@
                 deliveryOption.addEventListener('click', () => {
                     updateDeliveryOption(productId, deliveryId);
                     renderOrderSummary();
+                    renderPaymentSummary();
                 });
             });
         }

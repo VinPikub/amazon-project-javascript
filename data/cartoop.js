@@ -1,7 +1,6 @@
-        function Cart(localStorageKey)
-        {
-            const cart  = {
-                cartItems: JSON.parse(localStorage.getItem(localStorageKey)) || [
+        class Cart {
+            localStorageKey = undefined;
+            cartItems = JSON.parse(localStorage.getItem(this.localStorageKey)) || [
                     {
                             id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
                             count: 2,
@@ -12,11 +11,13 @@
                             count: 1,
                             deliveryId: "2"
                     }
-                ],
+                ];
+
                 saveToLocal()
                 {
                     localStorage.setItem(localStorageKey, JSON.stringify(this.cartItems));
-                },
+                }
+
                 getCartItem(id)
                 {
                     let obj;
@@ -28,7 +29,8 @@
                         }
                     });
                     return obj;
-                },
+                }
+
                 addToCart(id, count)
                 {
                     let matchingItem = this.getCartItem(id);
@@ -52,12 +54,15 @@
                             deliveryId: deliveryId
                     })*/
                     this.saveToLocal();
-                },
-                cartQuantity: JSON.parse(localStorage.getItem(`cartHome-${localStorageKey}`)) || 0,
+                }
+
+                cartQuantity = JSON.parse(localStorage.getItem(`cartHome-${this.localStorageKey}`)) || 0;
+
                 saveCartQuantity()
                 {
                     localStorage.setItem('cartHome', JSON.stringify(this.cartQuantity));
-                },
+                }
+
                 getCartQuantity()
                 {
                     let cartCount = 0;
@@ -66,17 +71,19 @@
                         cartCount += cartItem.count;
                     });
                     return cartCount;
-                },
+                }
+
                 updateCartQuantity()
                 {
                     cartQuantity = getCartQuantity();
                     this.saveCartQuantity();
-                },
+                }
+
                 cartQuantityIncrement()
                 {
                     this.cartQuantity++;
                     this.saveCartQuantity();
-                },
+                }
 
                 removeCartItem(obj)
                 {
@@ -87,7 +94,7 @@
                     });
                     this.cartItems = newCart;
                     this.saveToLocal();
-                },
+                }
 
                 updateDeliveryOption(productId, deliveryId)
                 {
@@ -98,7 +105,7 @@
                                     this.saveToLocal();
                             }
                     });
-                },
+                }
 
                 itemPrice()
                 {
@@ -112,7 +119,7 @@
                             total += productPrice*cartItem.count;
                     });
                     return total;
-                },
+                }
 
                 itemShipping()
                 {
@@ -127,13 +134,13 @@
                             total += shipping;
                     });
                     return total;
-                },
+                }
 
                 itemTotalBeforeTax()
                 {
                     let total = this.itemPrice() + this.itemShipping();
                     return total;
-                },
+                }
 
                 itemTax()
                 {
@@ -141,17 +148,12 @@
                     let tax = total * 10/100;
                     return tax;
                 }
-            };
-            return cart; 
         }
-        //saveToLocal();
 
-
-        let cart = Cart('cart-oop');
+        let cart = new Cart();
+        cart.localStorageKey = 'cart-oop';
         cart.saveCartQuantity();
 
-        let cartBusiness = Cart('cart-business');
+        let cartBusiness = new Cart();
+        cartBusiness.localStorageKey = 'cart-business';
         cartBusiness.saveCartQuantity();
-
-        console.log(cart);
-        console.log(cartBusiness);

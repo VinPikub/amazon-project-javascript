@@ -1,17 +1,23 @@
         class Cart {
-            localStorageKey = undefined;
-            cartItems = JSON.parse(localStorage.getItem(this.localStorageKey)) || [
-                    {
-                            id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-                            count: 2,
-                            deliveryId: "1"
-                    },
-                    {
-                            id: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-                            count: 1,
-                            deliveryId: "2"
-                    }
+                localStorageKey;
+                cartItems = JSON.parse(localStorage.getItem(this.localStorageKey)) || [
+                        {
+                                id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+                                count: 2,
+                                deliveryId: "1"
+                        },
+                        {
+                                id: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
+                                count: 1,
+                                deliveryId: "2"
+                        }
                 ];
+
+                constructor(key)
+                {
+                    this.localStorageKey = key;
+                    this.saveCartQuantity();
+                }
 
                 saveToLocal()
                 {
@@ -150,10 +156,8 @@
                 }
         }
 
-        let cart = new Cart();
-        cart.localStorageKey = 'cart-oop';
-        cart.saveCartQuantity();
-
-        let cartBusiness = new Cart();
-        cartBusiness.localStorageKey = 'cart-business';
-        cartBusiness.saveCartQuantity();
+        let cart = new Cart('cart-oop');
+        let cartBusiness = new Cart('cart-business');
+        
+        console.log(cart);
+        console.log(cartBusiness);

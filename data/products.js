@@ -51,6 +51,30 @@ class Product
     }
   }
 
+  /*
+  const date = new Date(); //built-in class object
+  console.log(date);
+  console.log(date.toLocaleDateString());
+*/
+/*
+  let value = {
+    fuchka : [],
+    experiment(){
+      console.log(this.fuchka); //this is defined inside method
+    }
+  };
+  value.experiment();
+  */
+ /*
+ let element = {
+  a: 5,
+  b: this.a
+ };
+ console.log(element.b); //this is undefined outside method
+ //arrow function doesn't change the value of this
+ //when we use a normal function inside this, it will raise an error
+ //that's when arrow function come
+ */
 
 export const products = [
   {

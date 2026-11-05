@@ -66,7 +66,7 @@
 
                 saveCartQuantity()
                 {
-                    localStorage.setItem('cartHome', JSON.stringify(this.cartQuantity));
+                    localStorage.setItem(`cartHome-${this.#localStorageKey}`, JSON.stringify(this.cartQuantity));
                 }
 
                 getCartQuantity()

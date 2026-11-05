@@ -62,7 +62,7 @@
                     this.saveToLocal();
                 }
 
-                cartQuantity = JSON.parse(localStorage.getItem(`cartHome-${this.localStorageKey}`)) || 0;
+                cartQuantity = JSON.parse(localStorage.getItem(`cartHome-${this.#localStorageKey}`)) || 0;
 
                 saveCartQuantity()
                 {

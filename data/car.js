@@ -59,14 +59,20 @@ class Car{
     }
 }
 
-const carToyota = new Car('Toyota', 'Corolla');
-carToyota.displayInfo();
-carToyota.go();
-carToyota.openTrunk();
-carToyota.go();
-carToyota.closeTrunk();
-carToyota.go();
+class RaceCar extends Car{
+    acceleration;
+    constructor(brand, model, acceleration)
+    {
+        super(brand, model);
+        this.acceleration = acceleration;
+    }
+    go()
+    {
+        if((this.speed + this.acceleration) <= 300)
+            this.speed += this.acceleration;
+    }
+}
 
-const carCorolla = new Car('Tesla', 'Model 3');
-carCorolla.displayInfo();
-
+const carMclaren = new RaceCar('McLaren', 'F1', 20);
+carMclaren.go();
+carMclaren.displayInfo();

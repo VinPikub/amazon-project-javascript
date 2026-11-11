@@ -7,10 +7,15 @@ class Car{
         this.brand = brand;
         this.model = model;
     }
+
+    displayInfo()
+    {
+        console.log(`brand: ${this.brand} and model: ${this.model}`);
+    }
 }
 
 const carOne = new Car('Toyota', 'Corolla');
-const carTwo = new Car('Tesla', 'Model 3');
+carOne.displayInfo();
 
-console.log(carOne);
-console.log(carTwo);
+const carTwo = new Car('Tesla', 'Model 3');
+carTwo.displayInfo();

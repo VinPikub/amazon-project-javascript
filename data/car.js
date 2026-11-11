@@ -2,6 +2,8 @@ class Car{
     brand;
     model;
     speed = 0;
+    isTrunkOpen = false;
+
     constructor(brand, model)
     {
         this.brand = brand;
@@ -18,8 +20,15 @@ class Car{
         this.speed += 5;
         this.speed = (this.speed < 200) ? this.speed - 5 : this.speed;
         */
-        if((this.speed + 5) <= 200)
-            this.speed += 5;
+        if(this.isTrunkOpen === false)
+        {
+            if((this.speed + 5) <= 200)
+                this.speed += 5;
+        }
+        else
+        {
+            console.log('error! Trunk is open');
+        }
     }
 
     brake()
@@ -31,27 +40,33 @@ class Car{
         if((this.speed -5) >= 0)
             this.speed -= 5;
     }
+
+    openTrunk()
+    {
+        if(!this.isTrunkOpen)
+        {
+            console.log('Trunk will be opened');
+            this.isTrunkOpen = true;
+        }
+        else
+            console.log('error! car is moving, trunk can not be opened');
+    }
+
+    closeTrunk()
+    {
+        console.log('Trunk will be closed');
+        this.isTrunkOpen = false;
+    }
 }
 
 const carToyota = new Car('Toyota', 'Corolla');
 carToyota.displayInfo();
-for(let value = 0; value <= 55; value++)
-{
-    carToyota.go();
-}
-carToyota.displayInfo();
+carToyota.go();
+carToyota.openTrunk();
+carToyota.go();
+carToyota.closeTrunk();
+carToyota.go();
 
 const carCorolla = new Car('Tesla', 'Model 3');
 carCorolla.displayInfo();
 
-for(let value = 0; value <= 10; value++)
-{
-    carCorolla.go();
-}
-
-carCorolla.displayInfo();
-for(let value = 0; value < 26; value++)
-{
-    carCorolla.brake();
-}
-carCorolla.displayInfo();

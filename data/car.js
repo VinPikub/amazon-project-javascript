@@ -1,18 +1,18 @@
 class Car{
-    brand;
-    model;
+    #brand; //private property
+    #model; //private property
     speed = 0;
     isTrunkOpen = false;
 
     constructor(brand, model)
     {
-        this.brand = brand;
-        this.model = model;
+        this.#brand = brand;
+        this.#model = model;
     }
 
     displayInfo()
     {
-        console.log(`brand: ${this.brand} and model: ${this.model} and speed is ${this.speed}`);
+        console.log(`brand: ${this.#brand} and model: ${this.#model} and speed is ${this.speed}`);
     }
 
     go()

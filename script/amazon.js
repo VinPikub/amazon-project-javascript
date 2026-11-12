@@ -1,4 +1,4 @@
-        import {cart, addToCart, cartQuantity, cartQuantityIncrement} from '../data/cart.js';
+        import {cart} from '../data/cartoop.js';
         import {products} from '../data/products.js';
         import { formatCurrency } from './utils/money.js';
 
@@ -70,7 +70,7 @@
 
         let selectaddButt = document.querySelectorAll('.add-to-cart-button');
         let selectCartQuantity = document.querySelector('.cart-quantity');
-        selectCartQuantity.innerHTML = cartQuantity || '';
+        selectCartQuantity.innerHTML = cart.cartQuantity || '';
 
         selectaddButt.forEach((button) => {
             button.addEventListener('click', () => {
@@ -78,9 +78,9 @@
                 //let {productId} = button.dataset; //using shortcart
                 let fixSelect = document.querySelector(`.select-${id}`);
                 let count = Number(fixSelect.value);
-                cartQuantityIncrement();
-                addToCart(id, count);
-                selectCartQuantity.innerHTML = cartQuantity;
+                cart.cartQuantityIncrement();
+                cart.addToCart(id, count);
+                selectCartQuantity.innerHTML = cart.cartQuantity;
                 displayAdded(id);
             });
         });

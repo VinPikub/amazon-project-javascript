@@ -1,15 +1,15 @@
-        import { itemPrice, itemShipping, itemTotalBeforeTax, itemTax, getCartQuantity } from "../../data/cart.js";
+        import {cart} from "../../data/cartoop.js";
         import { formatCurrency } from "../utils/money.js";
 
         export function renderPaymentSummary()
         {
             let selectPaymentSummary = document.querySelector('.payment-summary');
-            const onlyProductPrice = itemPrice();
-            const shippingHandling = itemShipping();
-            const totalBeforeTax = itemTotalBeforeTax();
-            const estimatedTax = itemTax();
+            const onlyProductPrice = cart.itemPrice();
+            const shippingHandling = cart.itemShipping();
+            const totalBeforeTax = cart.itemTotalBeforeTax();
+            const estimatedTax = cart.itemTax();
             const total = totalBeforeTax + estimatedTax;
-            const items = getCartQuantity();
+            const items = cart.getCartQuantity();
 
             let paymentHtml = `<div class="payment-summary-title">
                                     Order Summary

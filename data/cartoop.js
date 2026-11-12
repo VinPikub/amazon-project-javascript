@@ -1,3 +1,5 @@
+        import {products} from './products.js';
+        import { deliveryOptions } from './delivery.js';
         class Cart {
                 #localStorageKey; //private attribute (private access specifier)
                 cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey)) || [
@@ -17,6 +19,7 @@
                 {
                     this.#localStorageKey = key;
                     this.saveCartQuantity();
+                    console.log(this.#localStorageKey);
                 }
 
                 saveToLocal()
@@ -81,7 +84,7 @@
 
                 updateCartQuantity()
                 {
-                    cartQuantity = getCartQuantity();
+                    this.cartQuantity = this.getCartQuantity();
                     this.saveCartQuantity();
                 }
 
@@ -150,14 +153,11 @@
 
                 itemTax()
                 {
-                    let total = itemTotalBeforeTax();
+                    let total = this.itemTotalBeforeTax();
                     let tax = total * 10/100;
                     return tax;
                 }
         }
 
-        let cart = new Cart('cart-oop');
+        export let cart = new Cart('cart-oop');
         let cartBusiness = new Cart('cart-business');
-        
-        console.log(cart);
-        console.log(cartBusiness);

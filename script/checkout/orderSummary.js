@@ -1,4 +1,4 @@
-        import {cart, getCartItem, saveToLocal, updateCartQuantity, removeCartItem, updateDeliveryOption, getCartQuantity} from '../../data/cart.js';
+        import {cart} from '../../data/cartoop.js';
         import { getProduct } from '../../data/products.js';
         import {formatCurrency} from '../utils/money.js';
         import { deliveryOptions, getDateString, getDeliveryOption } from '../../data/delivery.js';
@@ -9,7 +9,7 @@
             let selectCheckout = document.querySelector('.checkout-js');
             function renderCheckout()
             {
-                const cartCount = getCartQuantity();
+                const cartCount = cart.getCartQuantity();
                 let checkout = `Checkout (<a class="return-to-home-link"
                                 href="amazon.html">${cartCount} items</a>)`;
                 selectCheckout.innerHTML = checkout;
@@ -42,7 +42,7 @@
             function generateCartItems()
             {
                 let orderHtml = '';
-                cart.forEach((cartItem) => {
+                cart.cartItems.forEach((cartItem) => {
                     let deliveryOption = getDeliveryOption(cartItem);
                     let dateString = getDateString(deliveryOption);
                     let product = getProduct(cartItem.id);
@@ -114,10 +114,10 @@
                     deleteItem(id);
                 else
                 {
-                    let matchingObject = getCartItem(id);
+                    let matchingObject = cart.getCartItem(id);
                     matchingObject.count = value;
-                    saveToLocal();
-                    updateCartQuantity();
+                    cart.saveToLocal();
+                    cart.updateCartQuantity();
                     renderOrderSummary();
                     renderPaymentSummary();
                 }
@@ -139,9 +139,9 @@
 
             function deleteItem(id)
             {
-                let matchingObject = getCartItem(id);
-                removeCartItem(matchingObject);
-                updateCartQuantity();
+                let matchingObject = cart.getCartItem(id);
+                cart.removeCartItem(matchingObject);
+                cart.updateCartQuantity();
                 renderOrderSummary();
                 renderPaymentSummary();
             }
@@ -160,7 +160,7 @@
                 let deliveryId = deliveryOption.dataset.deliveryId; //here kebab case became camelCase
 
                 deliveryOption.addEventListener('click', () => {
-                    updateDeliveryOption(productId, deliveryId);
+                    cart.updateDeliveryOption(productId, deliveryId);
                     renderOrderSummary();
                     renderPaymentSummary();
                 });

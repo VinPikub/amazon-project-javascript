@@ -12,7 +12,7 @@ class Car{
 
     displayInfo()
     {
-        console.log(`brand: ${this.#brand} and model: ${this.#model} and speed is ${this.#speed}`);
+        console.log(`brand: ${this.#brand} and model: ${this.#model} and speed is ${this.speed}`);
     }
 
     go()
@@ -22,8 +22,8 @@ class Car{
         */
         if(this.isTrunkOpen === false)
         {
-            if((this.#speed + 5) <= 200)
-                this.#speed += 5;
+            if((this.speed + 5) <= 200)
+                this.speed += 5;
         }
         else
         {
@@ -37,8 +37,8 @@ class Car{
         this.speed -= 5;
         this.speed = (this.speed > 200) ? this.speed + 5 : this.speed;
         */
-        if((this.#speed -5) >= 0)
-            this.#speed -= 5;
+        if((this.speed -5) >= 0)
+            this.speed -= 5;
     }
 
     openTrunk()
@@ -58,9 +58,6 @@ class Car{
         this.isTrunkOpen = false;
     }
 }
-const carToyota = new Car('Toyota', 'prius');
-carToyota.go();
-carToyota.displayInfo();
 
 class RaceCar extends Car{
     acceleration;

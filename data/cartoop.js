@@ -2,7 +2,12 @@
         import { deliveryOptions } from './delivery.js';
         class Cart {
                 #localStorageKey; //private attribute (private access specifier)
-                cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey)) || [
+                cartItems;
+
+                constructor(key)
+                {
+                    this.#localStorageKey = key;
+                    this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey)) || [
                         {
                                 id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
                                 count: 2,
@@ -14,14 +19,8 @@
                                 deliveryId: "2"
                         }
                 ];
-
-                constructor(key)
-                {
-                    this.#localStorageKey = key;
                     this.saveCartQuantity();
-                    console.log(this.#localStorageKey);
                 }
-
                 saveToLocal()
                 {
                     localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));

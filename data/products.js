@@ -93,7 +93,7 @@ class Appliance extends Product{
  //when we use a normal function inside this, it will raise an error
  //that's when arrow function come
  */
-
+/*
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -769,6 +769,29 @@ export const products = [
     return new Appliance(productDetails);   
   return new Product(productDetails);
 });
+*/
+
+export let products = [];
+
+export function loadProducts(fun)
+{
+  const xhr = new XMLHttpRequest();
+  xhr.addEventListener('load', () => {
+    products = JSON.parse(xhr.response).map((productDetails) => {
+      if(productDetails.type === 'clothing')
+        return new Clothing(productDetails);
+      
+      if(productDetails.type === 'appliance')
+        return new Appliance(productDetails);   
+      
+      return new Product(productDetails);
+    });
+  });
+  xhr.open('GET', 'https://supersimplebackend.dev/products');
+  xhr.send();
+
+  fun();
+}
 
 export function getProduct(id)
 {

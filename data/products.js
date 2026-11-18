@@ -786,11 +786,11 @@ export function loadProducts(fun)
       
       return new Product(productDetails);
     });
+    //calling callback function after products is loaded
+    fun();;
   });
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
-
-  fun();
 }
 
 export function getProduct(id)

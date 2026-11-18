@@ -53,7 +53,7 @@
 
                                     <div class="cart-item-details-grid">
                                         <img class="product-image"
-                                        src=${product.image}>
+                                        src="${product.image}">
 
                                         <div class="cart-item-details">
                                             <div class="product-name">

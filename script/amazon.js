@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="product-price">
-                            ${item.getPrice()}
+                            $${item.getPrice()}
                         </div>
 
                         <div class="product-quantity-container">

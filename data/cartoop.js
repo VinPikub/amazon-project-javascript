@@ -19,7 +19,7 @@
                                 deliveryId: "2"
                         }
                 ];
-                    this.saveCartQuantity();
+                    //this.saveCartQuantity();
                 }
                 saveToLocal()
                 {
@@ -64,13 +64,6 @@
                     this.saveToLocal();
                 }
 
-                cartQuantity = JSON.parse(localStorage.getItem(`cartHome-${this.#localStorageKey}`)) || 0;
-
-                saveCartQuantity()
-                {
-                    localStorage.setItem(`cartHome-${this.#localStorageKey}`, JSON.stringify(this.cartQuantity));
-                }
-
                 getCartQuantity()
                 {
                     let cartCount = 0;
@@ -81,17 +74,7 @@
                     return cartCount;
                 }
 
-                updateCartQuantity()
-                {
-                    this.cartQuantity = this.getCartQuantity();
-                    this.saveCartQuantity();
-                }
-
-                cartQuantityIncrement()
-                {
-                    this.cartQuantity++;
-                    this.saveCartQuantity();
-                }
+                
 
                 removeCartItem(obj)
                 {

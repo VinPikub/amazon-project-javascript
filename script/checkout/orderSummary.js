@@ -1,3 +1,4 @@
+        import { cartHomeQuantity, updateCartQuantity } from '../../data/cartHome.js';
         import {cart} from '../../data/cartoop.js';
         import { getProduct } from '../../data/products.js';
         import {formatCurrency} from '../utils/money.js';
@@ -117,7 +118,7 @@
                     let matchingObject = cart.getCartItem(id);
                     matchingObject.count = value;
                     cart.saveToLocal();
-                    cart.updateCartQuantity();
+                    updateCartQuantity(cart);
                     renderOrderSummary();
                     renderPaymentSummary();
                 }
@@ -141,7 +142,7 @@
             {
                 let matchingObject = cart.getCartItem(id);
                 cart.removeCartItem(matchingObject);
-                cart.updateCartQuantity();
+                updateCartQuantity(cart);
                 renderOrderSummary();
                 renderPaymentSummary();
             }

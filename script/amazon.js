@@ -1,3 +1,4 @@
+        import { cartHomeQuantity, cartQuantityIncrement } from '../data/cartHome.js';
         import {cart} from '../data/cartoop.js';
         import {products, loadProducts} from '../data/products.js';
 
@@ -72,7 +73,7 @@
 
             let selectaddButt = document.querySelectorAll('.add-to-cart-button');
             let selectCartQuantity = document.querySelector('.cart-quantity');
-            selectCartQuantity.innerHTML = cart.cartQuantity || '';
+            selectCartQuantity.innerHTML = cartHomeQuantity || '';
 
             selectaddButt.forEach((button) => {
                 button.addEventListener('click', () => {
@@ -80,9 +81,9 @@
                     //let {productId} = button.dataset; //using shortcart
                     let fixSelect = document.querySelector(`.select-${id}`);
                     let count = Number(fixSelect.value);
-                    cart.cartQuantityIncrement();
+                    cartQuantityIncrement();
                     cart.addToCart(id, count);
-                    selectCartQuantity.innerHTML = cart.cartQuantity;
+                    selectCartQuantity.innerHTML = cartHomeQuantity;
                     displayAdded(id);
                 });
             });
